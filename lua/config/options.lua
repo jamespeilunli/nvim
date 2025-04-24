@@ -27,6 +27,12 @@ vim.api.nvim_create_user_command("Gsr", function()
   vim.cmd("Gitsigns reset_hunk")
 end, {})
 
+vim.api.nvim_create_user_command("St", function()
+  vim.cmd("belowright 10split")
+  vim.cmd("terminal")
+  vim.api.nvim_feedkeys("i", "n", false)
+end, {})
+
 vim.fn.setreg("l", 'ymu/;\roLOG(INFO) << "pli: " << (pA;`u:delm u\r') -- macro to log in c++
 
 vim.opt.autoindent = true
