@@ -18,6 +18,7 @@
   "mini.pairs": { "branch": "main", "commit": "69864a2efb36c030877421634487fd90db1e4298" },
   "noice.nvim": { "branch": "main", "commit": "0427460c2d7f673ad60eb02b35f5e9926cf67c59" },
   "nui.nvim": { "branch": "main", "commit": "8d3bce9764e627b62b07424e0df77f680d47ffdb" },
+  "nvim-jdtls": { "branch": "master", "commit": "c23f200fee469a415c77265ca55b496feb646992" },
   "nvim-lint": { "branch": "master", "commit": "81e8ba7655cc4395b1092ef4e1b6e83f54cd54ad" },
   "nvim-lspconfig": { "branch": "master", "commit": "40f120c10ea4b87311175539a183c3b75eab95a3" },
   "nvim-treesitter": { "branch": "master", "commit": "997288c55253e27f782d991099490f80205d65bf" },
