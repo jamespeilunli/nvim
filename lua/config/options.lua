@@ -4,7 +4,7 @@
 
 vim.g.snacks_animate = false -- disable animations
 
-vim.o.shell = "/opt/homebrew/bin/bash --login" -- bash --login runs bashrc
+vim.o.shell = "zsh"
 
 vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20" -- restore previous bash activity
 
