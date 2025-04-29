@@ -1,12 +1,17 @@
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
-local workspace_dir = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+local workspace_dir = vim.fn.systemlist("git rev-parse --show-toplevel")[1] or vim.fn.getcwd()
+local project_name = vim.fn.fnamemodify(workspace_dir, ":p:h:t")
+local workspace_cache = "/Users/jamesli/.cache/jdtls/" .. project_name
+
+-- Create the cache directory if it doesn't exist
+vim.fn.mkdir(workspace_cache, "p")
 
 local config = {
   -- The command that starts the language server
   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
   cmd = {
 
-    "/opt/homebrew/opt/openjdk/bin/java", -- or '/path/to/java21_or_newer/bin/java'
+    "/Users/jamesli/wpilib/2025/jdk/bin/java", -- or '/path/to/java21_or_newer/bin/java'
     -- depends on if `java` is in your $PATH env variable and if it points to the right version.
 
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -14,7 +19,8 @@ local config = {
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
     "-Dlog.protocol=true",
     "-Dlog.level=ALL",
-    "-Xmx1g",
+    "-Xms1g",
+    "-Xmx2g",
     "--add-modules=ALL-SYSTEM",
     "--add-opens",
     "java.base/java.util=ALL-UNNAMED",
@@ -22,7 +28,7 @@ local config = {
     "java.base/java.lang=ALL-UNNAMED",
 
     "-jar",
-    "/Users/jamesli/.local/bin/jdt-language-server-1.46.1-202504011455/plugins/org.eclipse.equinox.launcher_1.46.1.202504011455.jar",
+    "/Users/jamesli/.local/bin/jdt-language-server-1.46.1-202504011455/plugins/org.eclipse.equinox.launcher_1.7.0.v20250331-1702.jar",
     -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
     -- Must point to the                                                     Change this to
     -- eclipse.jdt.ls installation                                           the actual version
@@ -35,7 +41,7 @@ local config = {
 
     -- See `data directory configuration` section in the README
     "-data",
-    workspace_dir,
+    workspace_cache,
   },
 
   -- 💀
@@ -51,7 +57,27 @@ local config = {
   -- for a list of options
   settings = {
     java = {
-      home = "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
+      home = "/Users/jamesli/wpilib/2025/jdk",
+      project = {
+        referencedLibraries = {
+          "lib/**/*.jar",
+        },
+      },
+      import = {
+        gradle = {
+          enabled = false,
+        },
+        maven = {
+          enabled = false,
+        },
+        exclusions = {
+          "**/node_modules/**",
+          "**/.metadata/**",
+        },
+      },
+      autobuild = {
+        enabled = false,
+      },
     },
   },
 
