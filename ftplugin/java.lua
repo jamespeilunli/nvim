@@ -83,6 +83,45 @@ local config = {
       autobuild = {
         enabled = false,
       },
+
+      configuration = {
+        updateBuildConfiguration = "automatic",
+      },
+      server = {
+        launchMode = "Standard",
+      },
+      completion = {
+        favoriteStaticMembers = {
+          "org.junit.Assert.*",
+          "org.junit.Assume.*",
+          "org.junit.jupiter.api.Assertions.*",
+          "org.junit.jupiter.api.Assumptions.*",
+          "org.junit.jupiter.api.DynamicContainer.*",
+          "org.junit.jupiter.api.DynamicTest.*",
+          "org.mockito.Mockito.*",
+          "org.mockito.ArgumentMatchers.*",
+          "org.mockito.Answers.*",
+          "edu.wpi.first.units.Units.*",
+        },
+        filteredTypes = {
+          "java.awt.*",
+          "com.sun.*",
+          "sun.*",
+          "jdk.*",
+          "org.graalvm.*",
+          "io.micrometer.shaded.*",
+          "java.beans.*",
+          "java.util.Base64.*",
+          "java.util.Timer",
+          "java.sql.*",
+          "javax.swing.*",
+          "javax.management.*",
+          "javax.smartcardio.*",
+          "edu.wpi.first.math.proto.*",
+          "edu.wpi.first.math.**.proto.*",
+          "edu.wpi.first.math.**.struct.*",
+        },
+      },
     },
   },
 
