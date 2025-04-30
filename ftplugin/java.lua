@@ -50,7 +50,7 @@ local config = {
   --
   -- vim.fs.root requires Neovim 0.10.
   -- If you're using an earlier version, use: require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
-  root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew" }),
+  root_dir = require("jdtls.setup").find_root({ "build.gradle", ".git" }),
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
@@ -60,12 +60,17 @@ local config = {
       home = "/Users/jamesli/wpilib/2025/jdk",
       project = {
         referencedLibraries = {
+          "**/build/libs/*.jar",
+          "**/build/deps/*.jar",
           "lib/**/*.jar",
         },
       },
       import = {
         gradle = {
-          enabled = false,
+          enabled = true,
+          wrapper = {
+            enabled = true,
+          },
         },
         maven = {
           enabled = false,
@@ -90,6 +95,7 @@ local config = {
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
     bundles = {},
+    workspaceFolders = { workspace_dir },
   },
 }
 -- This starts a new client & server,
