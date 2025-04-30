@@ -1,18 +1,15 @@
--- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
+-- Configuration details: https://github.com/mfussenegger/nvim-jdtls?tab=readme-ov-file#configuration-verbose
+
 local workspace_dir = vim.fn.systemlist("git rev-parse --show-toplevel")[1] or vim.fn.getcwd()
 local project_name = vim.fn.fnamemodify(workspace_dir, ":p:h:t")
 local workspace_cache = "/Users/jamesli/.cache/jdtls/" .. project_name
 
--- Create the cache directory if it doesn't exist
 vim.fn.mkdir(workspace_cache, "p")
 
+-- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
-  -- The command that starts the language server
-  -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
   cmd = {
-
-    "/Users/jamesli/wpilib/2025/jdk/bin/java", -- or '/path/to/java21_or_newer/bin/java'
-    -- depends on if `java` is in your $PATH env variable and if it points to the right version.
+    "/Users/jamesli/wpilib/2025/jdk/bin/java",
 
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
@@ -29,32 +26,18 @@ local config = {
 
     "-jar",
     "/Users/jamesli/.local/bin/jdt-language-server-1.46.1-202504011455/plugins/org.eclipse.equinox.launcher_1.7.0.v20250331-1702.jar",
-    -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
-    -- Must point to the                                                     Change this to
-    -- eclipse.jdt.ls installation                                           the actual version
 
     "-configuration",
     "/Users/jamesli/.local/bin/jdt-language-server-1.46.1-202504011455/config_mac",
-    -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
-    -- Must point to the                      Change to one of `linux`, `win` or `mac`
-    -- eclipse.jdt.ls installation            Depending on your system.
 
-    -- See `data directory configuration` section in the README
     "-data",
     workspace_cache,
   },
 
-  -- 💀
-  -- This is the default if not provided, you can remove it. Or adjust as needed.
-  -- One dedicated LSP server & client will be started per unique root_dir
-  --
-  -- vim.fs.root requires Neovim 0.10.
-  -- If you're using an earlier version, use: require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
   root_dir = require("jdtls.setup").find_root({ "build.gradle", ".git" }),
 
-  -- Here you can configure eclipse.jdt.ls specific settings
-  -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-  -- for a list of options
+  -- Configure eclipse.jdt.ls specific settings
+  -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   settings = {
     java = {
       home = "/Users/jamesli/wpilib/2025/jdk",
@@ -137,6 +120,7 @@ local config = {
     workspaceFolders = { workspace_dir },
   },
 }
+
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require("jdtls").start_or_attach(config)
