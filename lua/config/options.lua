@@ -19,13 +19,8 @@ vim.api.nvim_create_user_command("Gsd", function()
   vim.cmd("wincmd L") -- make the diff left-right instead of up-down
 end, {})
 
-vim.api.nvim_create_user_command("Gsp", function()
-  vim.cmd("Gitsigns preview_hunk")
-end, {})
-
-vim.api.nvim_create_user_command("Gsr", function()
-  vim.cmd("Gitsigns reset_hunk")
-end, {})
+-- view long lsp errors
+vim.keymap.set("n", "<space>de", vim.diagnostic.open_float, { noremap = true, silent = true })
 
 vim.api.nvim_create_user_command("St", function()
   vim.cmd("belowright 10split")
