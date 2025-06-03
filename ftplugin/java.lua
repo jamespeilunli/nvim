@@ -2,14 +2,14 @@
 
 local workspace_dir = vim.fn.systemlist("git rev-parse --show-toplevel")[1] or vim.fn.getcwd()
 local project_name = vim.fn.fnamemodify(workspace_dir, ":p:h:t")
-local workspace_cache = "/Users/jamesli/.cache/jdtls/" .. project_name
+local workspace_cache = "/home/jamesli/.cache/jdtls/" .. project_name
 
 vim.fn.mkdir(workspace_cache, "p")
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
   cmd = {
-    "/Users/jamesli/wpilib/2025/jdk/bin/java",
+    "/usr/lib/jvm/java-21-openjdk-amd64/bin/java",
 
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
@@ -25,10 +25,10 @@ local config = {
     "java.base/java.lang=ALL-UNNAMED",
 
     "-jar",
-    "/Users/jamesli/.local/bin/jdt-language-server-1.46.1-202504011455/plugins/org.eclipse.equinox.launcher_1.7.0.v20250331-1702.jar",
+    "/home/jamesli/.local/share/jdt-language-server-1.47.0/plugins/org.eclipse.equinox.launcher_1.7.0.v20250424-1814.jar",
 
     "-configuration",
-    "/Users/jamesli/.local/bin/jdt-language-server-1.46.1-202504011455/config_mac",
+    "/home/jamesli/.local/share/jdt-language-server-1.47.0/config_linux",
 
     "-data",
     workspace_cache,
@@ -40,7 +40,7 @@ local config = {
   -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   settings = {
     java = {
-      home = "/Users/jamesli/wpilib/2025/jdk",
+      home = "/usr/lib/jvm/java-21-openjdk-amd64",
       project = {
         referencedLibraries = {
           "**/build/libs/*.jar",
@@ -117,7 +117,7 @@ local config = {
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
     bundles = {},
-    workspaceFolders = { workspace_dir },
+    -- workspaceFolders = { workspace_dir }, -- issues on ubuntu?
   },
 }
 
