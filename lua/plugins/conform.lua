@@ -6,7 +6,7 @@ return {
     opts.formatters = vim.tbl_deep_extend("force", opts.formatters or {}, {
       google_java_format = {
         command = "google-java-format",
-        args = { "-i", "$FILENAME" },
+        args = { "-r", "$FILENAME" },
         stdin = false,
       },
     })
