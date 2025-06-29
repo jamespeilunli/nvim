@@ -62,6 +62,6 @@ end, {})
 vim.fn.setreg("l", 'ymu/;\roSystem.out.printf("pli: %s%n", pA;`u:delm u\r') -- macro to log in java
 
 vim.opt.autoindent = true
-vim.opt.tabstop = 4
+vim.opt.tabstop = 2
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
