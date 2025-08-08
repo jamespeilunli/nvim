@@ -2,7 +2,12 @@ return {
   "folke/flash.nvim",
   event = "VeryLazy",
   ---@type Flash.Config
-  opts = {},
+  opts = { modes = { char = {
+    highlight = {
+      match = "FlashMatch",
+      backdrop = false,
+    },
+  } } },
   -- stylua: ignore
   keys = {
     { "s", mode = { "n", "x", "o" }, false },
