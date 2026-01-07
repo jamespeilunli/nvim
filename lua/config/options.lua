@@ -67,3 +67,5 @@ vim.opt.autoindent = true
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
+
+vim.o.mousescroll = "ver:3,hor:0"
