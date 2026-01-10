@@ -69,3 +69,11 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 
 vim.o.mousescroll = "ver:3,hor:0"
+
+vim.keymap.set("n", "<space>rr", "<cmd>CompetiTest run<CR>", { desc = "CompetiTest run", silent = true })
+vim.keymap.set(
+  "n",
+  "<space>rt",
+  "<cmd>CompetiTest receive testcases<CR>",
+  { desc = "CompetiTest receive testcases", silent = true }
+)
