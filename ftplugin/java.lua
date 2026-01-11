@@ -19,7 +19,7 @@ local config = {
     "-Xms1g",
     "-Xmx2g",
     "-javaagent:"
-      .. "/home/jamesli/wpilib/2025/vscode/VSCode-linux-x64/data/extensions/redhat.java-1.38.0/lombok/lombok-1.18.34.jar",
+      .. "/home/jamesli/wpilib/2026/vscode/VSCode-linux-x64/data/extensions/redhat.java-1.38.0/lombok/lombok-1.18.34.jar",
     "--add-modules=ALL-SYSTEM",
     "--add-opens",
     "java.base/java.util=ALL-UNNAMED",
