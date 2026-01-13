@@ -2,6 +2,32 @@ return {
   "xeluxee/competitest.nvim",
   dependencies = "MunifTanjim/nui.nvim",
   config = function()
+    local function slugify(s)
+      s = (s or ""):lower()
+      s = s:gsub("[^%w]+", "_")
+      s = s:gsub("^_+", ""):gsub("_+$", "")
+      if s == "" then
+        s = "problem"
+      end
+      return s
+    end
+
+    local root = vim.fn.expand("~") .. "/programming/competitive"
+
+    local function parse_group(group)
+      -- competitive-companion usually sets: "JUDGE - CONTEST"
+      local judge, contest = "unknown_judge", "unknown_contest"
+      group = group or ""
+      local hyphen = group:find(" %- ")
+      if hyphen then
+        judge = group:sub(1, hyphen - 1)
+        contest = group:sub(hyphen + 3)
+      elseif group ~= "" then
+        judge = group
+      end
+      return slugify(judge), slugify(contest)
+    end
+
     require("competitest").setup({
       local_config_file_name = ".competitest.lua",
 
@@ -90,46 +116,86 @@ return {
       compile_directory = ".",
       compile_command = {
         c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
-        cpp = { exec = "g++", args = { "-std=gnu++17", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+        cpp = {
+          exec = "sh",
+          args = {
+            "-c",
+            "mkdir -p .bin && g++ -std=gnu++17 -Wall -I'$(HOME)/programming/competitive/include' '$(FNAME)' -o .bin/'$(FNOEXT)'",
+          },
+        },
         rust = { exec = "rustc", args = { "$(FNAME)" } },
         java = { exec = "javac", args = { "$(FNAME)" } },
       },
       running_directory = ".",
       run_command = {
         c = { exec = "./$(FNOEXT)" },
-        cpp = { exec = "./$(FNOEXT)" },
+        cpp = { exec = "./.bin/$(FNOEXT)" },
         rust = { exec = "./$(FNOEXT)" },
         python = { exec = "python", args = { "$(FNAME)" } },
         java = { exec = "java", args = { "$(FNOEXT)" } },
       },
+
       multiple_testing = -1,
       maximum_time = 5000,
       output_compare_method = "squish",
       view_output_diff = false,
 
-      testcases_directory = ".",
-      testcases_use_single_file = false,
+      testcases_directory = ".tests",
+
+      testcases_use_single_file = true,
       testcases_auto_detect_storage = true,
       testcases_single_file_format = "$(FNOEXT).testcases",
+
       testcases_input_file_format = "$(FNOEXT)_input$(TCNUM).txt",
       testcases_output_file_format = "$(FNOEXT)_output$(TCNUM).txt",
 
       companion_port = 27121,
       receive_print_message = true,
       start_receiving_persistently_on_setup = false,
-      template_file = false,
-      evaluate_template_modifiers = false,
+
+      -- ~/programming/competitive/templates/template.cpp
+      template_file = root .. "/templates/template.$(FEXT)",
+      evaluate_template_modifiers = true,
+
       date_format = "%c",
       received_files_extension = "cpp",
-      received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
-      received_problems_prompt_path = true,
-      received_contests_directory = "$(CWD)",
-      received_contests_problems_path = "$(PROBLEM).$(FEXT)",
-      received_contests_prompt_directory = true,
-      received_contests_prompt_extension = true,
+
+      received_problems_prompt_path = false,
+      received_contests_prompt_directory = false,
+      received_contests_prompt_extension = false,
+
+      -- receive problem: ~/programming/competitive/<judge>/<contest>/<problem>.cpp
+      received_problems_path = function(task, ext)
+        local judge, contest = parse_group(task.group)
+        local prob = slugify(task.name)
+        return string.format("%s/%s/%s/%s.%s", root, judge, contest, prob, ext)
+      end,
+
+      -- receive contest root: ~/programming/competitive/<judge>/<contest>/
+      received_contests_directory = function(task, _)
+        local judge, contest = parse_group(task.group)
+        return string.format("%s/%s/%s", root, judge, contest)
+      end,
+
+      -- receive contest problems: <contest>/<problem>.cpp
+      received_contests_problems_path = function(task, ext)
+        return string.format("%s.%s", slugify(task.name), ext)
+      end,
+
       open_received_problems = true,
       open_received_contests = true,
       replace_received_testcases = false,
     })
+
+    vim.keymap.set("n", "<space>rr", "<cmd>CompetiTest run<CR>", { desc = "CompetiTest run" })
+    vim.keymap.set(
+      "n",
+      "<space>rt",
+      "<cmd>CompetiTest receive testcases<CR>",
+      { desc = "CompetiTest receive testcases" }
+    )
+    vim.keymap.set("n", "<space>rp", "<cmd>CompetiTest receive problem<CR>", { desc = "CompetiTest receive problem" })
+    vim.keymap.set("n", "<space>ra", "<cmd>CompetiTest add_testcase<CR>", { desc = "CompetiTest run" })
+    vim.keymap.set("n", "<space>re", "<cmd>CompetiTest edit_testcase<CR>", { desc = "CompetiTest run" })
   end,
 }
