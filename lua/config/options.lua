@@ -62,6 +62,7 @@ vim.api.nvim_create_user_command("St", function()
 end, {})
 
 vim.fn.setreg("l", 'ymu/;\roSystem.out.printf("pli: %s%n", pA;`u:delm u\r') -- macro to log in java
+vim.fn.setreg("c", 'ymu/;\rocout << "pli: " << pA << "\\n";`u:delm u\r') -- macro to log in cpp
 
 vim.opt.autoindent = true
 vim.opt.tabstop = 2
