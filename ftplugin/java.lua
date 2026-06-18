@@ -66,22 +66,12 @@ local config = {
       autobuild = {
         enabled = false,
       },
+
       configuration = {
         updateBuildConfiguration = "automatic",
       },
       server = {
         launchMode = "Standard",
-      },
-      test = {
-        config = {
-          name = "WPIlibUnitTests",
-          workingDirectory = workspace_dir .. "/build/jni/release",
-          vmargs = { "-Djava.library.path=" .. workspace_dir .. "/build/jni/release" },
-          env = {
-            LD_LIBRARY_PATH = workspace_dir .. "/build/jni/release",
-            DYLD_LIBRARY_PATH = workspace_dir .. "/build/jni/release",
-          },
-        },
       },
       completion = {
         favoriteStaticMembers = {
