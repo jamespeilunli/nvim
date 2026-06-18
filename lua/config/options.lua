@@ -69,4 +69,8 @@ vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 
+--- don't continue comments on new line
+-vim.cmd("autocmd BufEnter * set formatoptions-=cro")
+-vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+
 vim.o.mousescroll = "ver:3,hor:0"
