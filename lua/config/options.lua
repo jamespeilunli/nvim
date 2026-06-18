@@ -70,3 +70,6 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 
 vim.o.mousescroll = "ver:3,hor:0"
+
+vim.g.clipboard = "osc52"
+vim.opt.clipboard = "unnamedplus"
