@@ -3,10 +3,7 @@ return {
   event = "VeryLazy",
   ---@type Flash.Config
   opts = { modes = { char = {
-    highlight = {
-      match = "FlashMatch",
-      backdrop = false,
-    },
+    highlight = { backdrop = false },
   } } },
   -- stylua: ignore
   keys = {

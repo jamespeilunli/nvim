@@ -10,9 +10,11 @@ vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20" -- restore previou
 
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]]) -- escape goes to normal mode in terminal
 
--- keymap to copy current filename to clipboard
+-- keymaps to copy current filename to clipboard
 vim.keymap.set("n", "<leader>b+", ":let @+ = expand('%:p')<CR>", { noremap = true, silent = true }) -- absolute path
-vim.keymap.set("n", "<leader>b=", ":let @+ = expand('%')<CR>", { noremap = true, silent = true }) -- relative path
+vim.keymap.set("n", "<leader>b=", function()
+  vim.fn.setreg("+", vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":."))
+end, { noremap = true, silent = true }) -- relative path
 
 -- git diff viewing
 vim.api.nvim_create_user_command("Gsd", function()
@@ -60,12 +62,15 @@ vim.api.nvim_create_user_command("St", function()
 end, {})
 
 vim.fn.setreg("l", 'ymu/;\roSystem.out.printf("pli: %s%n", pA;`u:delm u\r') -- macro to log in java
+vim.fn.setreg("c", 'ymu/;\rocout << "pli: " << pA << "\\n";`u:delm u\r') -- macro to log in cpp
 
 vim.opt.autoindent = true
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 
--- don't continue comments on new line
-vim.cmd("autocmd BufEnter * set formatoptions-=cro")
-vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+--- don't continue comments on new line
+-vim.cmd("autocmd BufEnter * set formatoptions-=cro")
+-vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+
+vim.o.mousescroll = "ver:3,hor:0"
