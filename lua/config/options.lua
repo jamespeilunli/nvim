@@ -70,3 +70,5 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 
 vim.o.mousescroll = "ver:3,hor:0"
+
+vim.opt.conceallevel = 0
